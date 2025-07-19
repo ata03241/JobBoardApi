@@ -166,3 +166,5 @@ C:\Users\pakhr\OneDrive\Desktop\JobBoardApi\obj\Debug\net9.0\refint\JobBoardApi.
 C:\Users\pakhr\OneDrive\Desktop\JobBoardApi\obj\Debug\net9.0\JobBoardApi.pdb
 C:\Users\pakhr\OneDrive\Desktop\JobBoardApi\obj\Debug\net9.0\JobBoardApi.genruntimeconfig.cache
 C:\Users\pakhr\OneDrive\Desktop\JobBoardApi\obj\Debug\net9.0\ref\JobBoardApi.dll
+C:\Users\pakhr\OneDrive\Desktop\JobBoardApi\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\pakhr\OneDrive\Desktop\JobBoardApi\obj\Debug\net9.0\JobBoardApi.sourcelink.json
