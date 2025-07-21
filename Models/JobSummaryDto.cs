@@ -7,4 +7,6 @@ public class JobSummaryDto
     public int Id { get; set; }
     public string Title { get; set; }
     public string CompanyName { get; set; }
+
+    public bool IsApproved { get; set; }
 }

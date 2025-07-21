@@ -10,5 +10,7 @@ public class Job
     public DateTime PostedDate { get; set; }
     public string CompanyName { get; set; } = string.Empty;
 
+     public bool IsApproved { get; set; }
+
     public List<Application> Applications { get; set; } = new List<Application>(); 
 }

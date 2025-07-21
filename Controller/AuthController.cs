@@ -21,6 +21,40 @@ public class AuthController : ControllerBase
         _context = context;
     }
 
+    [HttpPost("register")]
+    public async Task<IActionResult> Register(RegisterDto registerDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var existinguser = await _context.Users
+            .FirstOrDefaultAsync(u => u.Username == registerDto.Username || u.Email == registerDto.Email);
+
+        if (existinguser != null)
+        {
+            return BadRequest("Username or Email already exists.");
+        }
+
+        CreatePasswordHash(registerDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
+        var newUser = new User
+        {
+            Username = registerDto.Username,
+            Email = registerDto.Email,
+            PasswordHash = passwordHash,
+            PasswordSalt = passwordSalt,
+            CreatedAt = DateTime.UtcNow,
+            Role = UserRoles.JobSeeker,
+            IsApproved = false,
+        };
+
+        _context.Users.Add(newUser);
+        await _context.SaveChangesAsync();
+        return Ok(new { Message = "User registered successfully. Awaiting approval." });
+    }
+
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginDto loginDto)
     {
@@ -53,13 +87,20 @@ public class AuthController : ControllerBase
         {
             Token = token
         });
-     }
+    }
 
     private bool VerifyPassword(string password, byte[] storedHash, byte[] storedSalt)
     {
         using var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt);
         var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
         return computedHash.SequenceEqual(storedHash);
+    }
+
+    private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+    {
+        using var hmac = new System.Security.Cryptography.HMACSHA512();
+        passwordSalt = hmac.Key;
+        passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
     }
 
     private string GenerateJwtToken(User user)
