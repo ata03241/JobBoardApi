@@ -18,70 +18,39 @@ public class AdminController : ControllerBase
         _context = context;
     }
 
-    // Additional methods for admin functionalities can be added here
-    [HttpGet("pending-users")]
-    public async Task<IActionResult> GetPendingUsers()
-    {
-        var pendinguser = await _context.Users
-            .Where(u => !u.IsApproved)
-            .Select(u => new User
-            {
-                Id = u.Id,
-                Username = u.Username,
-                Email = u.Email,
-                CreatedAt = u.CreatedAt,
-                Role = u.Role
-            })
-            .ToListAsync();
 
-        if (pendinguser == null || !pendinguser.Any())
+    [HttpPut("users/{id}/role")]
+    public async Task<IActionResult> UpdateUserRole(int id, [FromBody] UpdateUserRoleDto  dto)
+    {
+        var validrole = new[] { UserRoles.Admin, UserRoles.Employer, UserRoles.JobSeeker };
+        if (!validrole.Contains(dto.Role))
         {
-            return NotFound("No pending users found.");
+            return BadRequest("Invalid role specified.");
         }
 
-        return Ok(pendinguser);
-    }
-
-    [HttpPost("approve/{id}")]
-    public async Task<IActionResult> ApproveUser(int id)
-    {
         var user = await _context.Users.FindAsync(id);
         if (user == null)
         {
             return NotFound("User not found.");
         }
 
-        user.IsApproved = true;
+        user.Role = dto.Role;
         _context.Users.Update(user);
         await _context.SaveChangesAsync();
-        return Ok("User approved successfully.");
-    }
-
-    [HttpPost("reject/{id}")]
-    public async Task<IActionResult> RejectUser(int id)
-    {
-        var user = await _context.Users.FindAsync(id);
-        if (user == null)
-        {
-            return NotFound("User not found.");
-        }
-        _context.Users.Remove(user);
-        await _context.SaveChangesAsync();
-        return Ok("User rejected and removed successfully.");
+        return Ok("User role updated successfully.");
     }
 
     [HttpGet("users")]
     public async Task<IActionResult> GetAllUsers()
     {
         var user = await _context.Users
-            .Select(u => new User
+            .Select(u => new UserDto
             {
                 Id = u.Id,
                 Username = u.Username,
                 Email = u.Email,
                 CreatedAt = u.CreatedAt,
-                Role = u.Role,
-                IsApproved = u.IsApproved
+                Role = u.Role
             })
             .ToListAsync();
 
@@ -105,4 +74,56 @@ public class AdminController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok("User deleted successfully.");
     }
+
+    [HttpGet("jobs/pending")]
+    public async Task<IActionResult> GetPendingJobs()
+    {
+        var pendingJobs = await _context.Jobs
+            .Where(j => !j.IsApproved)
+            .Select(j => new JobSummaryDto
+            {
+                Id = j.Id,
+                Title = j.Title,
+                CompanyName = j.CompanyName,
+                Description = j.Description
+            })
+            .ToListAsync();
+
+        if (pendingJobs == null || !pendingJobs.Any())
+        {
+            return NotFound("No pending jobs found.");
+        }
+
+        return Ok(pendingJobs);
+    }
+
+    [HttpPost("jobs/approve/{id}")]
+    public async Task<IActionResult> ApproveJob(int id)
+    {
+        var job = await _context.Jobs.FindAsync(id);
+        if (job == null)
+        {
+            return NotFound("Job not found.");
+        }
+
+        job.IsApproved = true;
+        _context.Jobs.Update(job);
+        await _context.SaveChangesAsync();
+        return Ok("Job approved successfully.");
+    }
+
+    [HttpDelete("jobs/{id}")]
+    public async Task<IActionResult> DeleteJob(int id)
+    {
+        var job = await _context.Jobs.FindAsync(id);
+        if (job == null)
+        {
+            return NotFound("Job not found.");
+        }
+
+        _context.Jobs.Remove(job);
+        await _context.SaveChangesAsync();
+        return Ok("Job deleted successfully.");
+    }
+
 }

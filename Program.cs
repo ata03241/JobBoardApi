@@ -47,8 +47,7 @@ using (var scope = app.Services.CreateScope())
             Username = "admin",
             Email = "admin@example.com",
             Role = "Admin",
-            CreatedAt = DateTime.UtcNow,
-            IsApproved = true,
+            CreatedAt = DateTime.UtcNow
         };
         CreatePasswordHash("admin123", out byte[] passwordHash, out byte[] passwordSalt);
         adminUser.PasswordHash = passwordHash;

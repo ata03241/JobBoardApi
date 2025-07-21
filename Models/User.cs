@@ -15,8 +15,6 @@ public class User
     public byte[] PasswordHash { get; set; }
     public byte[] PasswordSalt { get; set; }
     public string Role { get; set; } = UserRoles.JobSeeker;
-    public bool IsApproved { get; set; } = false;
-
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     [NotMapped]

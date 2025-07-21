@@ -8,5 +8,7 @@ public class JobSummaryDto
     public string Title { get; set; }
     public string CompanyName { get; set; }
 
+    public string Description { get; set; } = string.Empty;
+
     public bool IsApproved { get; set; }
 }

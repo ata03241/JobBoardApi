@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JobBoardApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1cfc8cf50bf234b6b2acad97f36f301959ee1b9f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e14cd0a08750ca3158048e05cd11e838dddda399")]
 [assembly: System.Reflection.AssemblyProductAttribute("JobBoardApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JobBoardApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

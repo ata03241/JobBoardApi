@@ -1,5 +1,6 @@
 using System;
 using JobBoardApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,12 +19,12 @@ public class JobController : ControllerBase
         _context = context;
     }
 
-    // Add methods for handling job-related requests here
     [HttpGet]
     public async Task<ActionResult<IEnumerable<JobDto>>> GetJobs()
     {
-        var jobs = await _context.Jobs.
-            Select(j => new JobDto
+        var jobs = await _context.Jobs
+            .Where(j => j.IsApproved)
+            .Select(j => new JobDto
             {
                 Id = j.Id,
                 Title = j.Title,
@@ -44,7 +45,7 @@ public class JobController : ControllerBase
     public async Task<ActionResult<JobDto>> GetJOb(int id)
     {
         var job = await _context.Jobs.
-            Where(j => j.Id == id)
+            Where(j => j.Id == id && j.IsApproved)
             .Select(j => new JobDto
             {
                 Id = j.Id,
@@ -61,7 +62,8 @@ public class JobController : ControllerBase
         }
         return Ok(job);
     }
-
+    
+    [Authorize(Roles = UserRoles.Admin + "," + UserRoles.Employer)]
     [HttpPost]
     public async Task<ActionResult<JobDto>> CreateJOb(JobDto jobDto)
     {
@@ -75,7 +77,8 @@ public class JobController : ControllerBase
             Title = jobDto.Title,
             Description = jobDto.Description,
             PostedDate = jobDto.PostedDate,
-            CompanyName = jobDto.CompanyName
+            CompanyName = jobDto.CompanyName,
+            IsApproved = false 
         };
 
         _context.Jobs.Add(job);
@@ -93,6 +96,7 @@ public class JobController : ControllerBase
         return CreatedAtAction(nameof(GetJOb), new { id = job.Id }, createdDtoJobb);
     }
 
+    [Authorize(Roles = UserRoles.Admin + "," + UserRoles.Employer)]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateJob(int id, JobDto job)
     {
@@ -116,6 +120,7 @@ public class JobController : ControllerBase
         return NoContent();
     }
 
+    [Authorize(Roles = UserRoles.Admin + "," + UserRoles.Employer)]
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteJob(int id)
     {
@@ -130,8 +135,5 @@ public class JobController : ControllerBase
 
         return NoContent(); // Returns 204 No Content
     }
-
-
-
 
 }

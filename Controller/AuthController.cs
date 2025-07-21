@@ -46,8 +46,7 @@ public class AuthController : ControllerBase
             PasswordHash = passwordHash,
             PasswordSalt = passwordSalt,
             CreatedAt = DateTime.UtcNow,
-            Role = UserRoles.JobSeeker,
-            IsApproved = false,
+            Role = UserRoles.JobSeeker
         };
 
         _context.Users.Add(newUser);
@@ -75,11 +74,6 @@ public class AuthController : ControllerBase
         if (!passwordValid)
         {
             return Unauthorized("Invalid username or password.");
-        }
-
-        if (!user.IsApproved)
-        {
-            return Unauthorized("User is not approved.");
         }
 
         var token = GenerateJwtToken(user);
