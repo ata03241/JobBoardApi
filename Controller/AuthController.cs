@@ -51,7 +51,7 @@ public class AuthController : ControllerBase
 
         _context.Users.Add(newUser);
         await _context.SaveChangesAsync();
-        return Ok(new { Message = "User registered successfully. Awaiting approval." });
+        return Ok(new { Message = "User registered successfully." });
     }
 
     [HttpPost("login")]
