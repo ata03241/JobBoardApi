@@ -29,7 +29,9 @@ git clone https://github.com/ata03241/JobBoardApi.git
 cd JobBoardApi
 
 Setup DB connection in appsettings.json
+
 Run the application
+
 dotnet run
 
 Author
