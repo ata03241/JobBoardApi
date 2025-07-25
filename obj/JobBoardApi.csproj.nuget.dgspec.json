@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pakhr\\OneDrive\\Desktop\\JobBoardApi\\JobBoardApi.csproj": {}
+    "C:\\Users\\pakhr\\OneDrive\\Desktop\\Github test\\JobBoardApi\\JobBoardApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pakhr\\OneDrive\\Desktop\\JobBoardApi\\JobBoardApi.csproj": {
+    "C:\\Users\\pakhr\\OneDrive\\Desktop\\Github test\\JobBoardApi\\JobBoardApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pakhr\\OneDrive\\Desktop\\JobBoardApi\\JobBoardApi.csproj",
+        "projectUniqueName": "C:\\Users\\pakhr\\OneDrive\\Desktop\\Github test\\JobBoardApi\\JobBoardApi.csproj",
         "projectName": "JobBoardApi",
-        "projectPath": "C:\\Users\\pakhr\\OneDrive\\Desktop\\JobBoardApi\\JobBoardApi.csproj",
+        "projectPath": "C:\\Users\\pakhr\\OneDrive\\Desktop\\Github test\\JobBoardApi\\JobBoardApi.csproj",
         "packagesPath": "C:\\Users\\pakhr\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pakhr\\OneDrive\\Desktop\\JobBoardApi\\obj\\",
+        "outputPath": "C:\\Users\\pakhr\\OneDrive\\Desktop\\Github test\\JobBoardApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
